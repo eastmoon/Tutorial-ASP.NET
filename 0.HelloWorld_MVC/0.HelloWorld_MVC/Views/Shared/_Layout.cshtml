@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <ul>
+            <li>@Html.ActionLink("Welcome - TestView", "Welcome", "HelloWorld", new { name = "Eastmoon", numtimes = 4 }, new { target = "_blank" })</li>
+            <li>@Html.ActionLink("Welcome - TestRoute1", "TestRoute1/3", "HelloWorld", new { name = "Eastmoon" }, new { target = "_blank" })</li>
+            <li>@Html.ActionLink("Welcome - TestRoute2", "TestRoute2/Eastmoon/5", "HelloWorld", null, new { target = "_blank" })</li>
+            <li>@Html.ActionLink("Movies", "Index", "Movies", null, new { target = "_blank" })</li>
+        </ul>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

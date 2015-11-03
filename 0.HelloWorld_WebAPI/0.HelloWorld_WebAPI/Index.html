@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello World</title>
+</head>
+<body>
+    <div>
+        <p>User List : </p>
+        <ul id="users"></ul>
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="userId" size="5" value="1" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="user"></p>
+        <div id="mail"></div>
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var uri = "api/helloworld";
+
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(uri).done(function (data) {
+                    // On success, 'data' contains a list of users.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#users'));
+                    });
+                });
+        })
+
+        function formatItem(item) {
+            return item.Name + ', Mail : ' + item.Mail;
+        }
+
+        function find() {
+            var id = $('#userId').val();
+            $.getJSON(uri + '/user/' + id.toString())
+                .done(function (data) {
+                    $('#user').text(formatItem(data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#user').text('Error: ' + err);
+                });
+
+            $.getJSON(uri + '/mail/' + id.toString())
+                .done(function (data) {
+                    $('#mail').html("<a href='mailto:" + data + "'>" + data + "</a>");
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#mail').html('Error: ' + err);
+                });
+        }
+    </script>
+</body>
+</html>
